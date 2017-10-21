@@ -19,5 +19,9 @@
   },
   "bin": {
     "crypto-cli": "index.js"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/christ0ph3r/cryptocurrency-cli"
   }
 }
