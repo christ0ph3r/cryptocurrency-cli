@@ -1,0 +1,23 @@
+{
+  "name": "cryptocurrency-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "crypto-cli": "node index.js"
+  },
+  "author": "n053",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.2.0",
+    "cli-table": "^0.3.1",
+    "figlet": "^1.2.0",
+    "foreach": "^2.0.5",
+    "jsonfile": "^4.0.0",
+    "request": "^2.83.0"
+  },
+  "bin": {
+    "crypto-cli": "index.js"
+  }
+}
