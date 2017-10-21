@@ -1,0 +1,10 @@
+{
+  "bitcoin": ".002",
+  "litecoin": "1",
+  "ripple": "100",
+  "bitcoin-cash": ".002",
+  "nem": "66",
+  "neo": ".3",
+  "ethereum": ".095",
+  "dogecoin": "10000"
+}
