@@ -34,6 +34,7 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
     chalk.blue('Last Updated'),
   ] });
   var currSym = '$';
+  var portfolioTotal = 10;
   each(data, function (value, key, array) {
     if(portfolio.hasOwnProperty(value.id)) {
       table.push([
@@ -49,9 +50,11 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
         chalk.green(`${value.percent_change_7d} %`),
         chalk.green(timeSince(new Date(value.last_updated * 1000)) + ' ago'),
       ]);
+      portfolioTotal += Number(Math.round(value.price_usd * portfolio[value.id]));
     }
   });
   console.log(table.toString());
+  console.log(chalk.underline.blue(`Portfolio Total: ${currSym}${portfolioTotal}`));
 });
 
 /**
