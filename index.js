@@ -40,9 +40,9 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
         chalk.green(currSym + addCommas(Number(Math.round(value.price_usd * portfolio[value.id])))),
         chalk.green(currSym + addCommas(addZeroes(value['24h_volume_usd']))),
         chalk.green(currSym + addCommas(addZeroes(value.market_cap_usd))),
-        chalk.green(`${value.percent_change_1h} %`),
-        chalk.green(`${value.percent_change_24h} %`),
-        chalk.green(`${value.percent_change_7d} %`),
+        chalk.green(`${value.percent_change_1h}%`),
+        chalk.green(`${value.percent_change_24h}%`),
+        chalk.green(`${value.percent_change_7d}%`),
         chalk.green(timeSince(new Date(value.last_updated * 1000)) + ' ago'),
       ]);
       var totalValue = Number(Math.round(value.price_usd * portfolio[value.id]));
