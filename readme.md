@@ -46,7 +46,7 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
 1. Run
 
     ```
-    crypto-cli
+    npm start
     ```
 
 1. Edit portfolio.json
