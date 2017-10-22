@@ -6,17 +6,12 @@ const chalk = require('chalk');
 const Table = require('cli-table');
 const jsonfile = require('jsonfile');
 const figlet = require('figlet');
+const Barcli = require("barcli");
 const file = 'portfolio.json';
 const portfolio = jsonfile.readFileSync(file);
+const currSym = '$';
 
-figlet('Crypto Portfolio', function(err, data) {
-  if (err) {
-    console.log('Something went wrong...');
-    console.dir(err);
-    return;
-  }
-  console.log(data)
-});
+figletLog('Crypto Portfolio Loading...');
 
 request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, response, body) {
   var data = JSON.parse(body);
@@ -33,8 +28,8 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
     chalk.blue('7 Days'),
     chalk.blue('Last Updated'),
   ] });
-  var currSym = '$';
-  var portfolioTotal = 10;
+  var portfolioTotal = 0;
+  var barData = {};
   each(data, function (value, key, array) {
     if(portfolio.hasOwnProperty(value.id)) {
       table.push([
@@ -50,12 +45,48 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
         chalk.green(`${value.percent_change_7d} %`),
         chalk.green(timeSince(new Date(value.last_updated * 1000)) + ' ago'),
       ]);
-      portfolioTotal += Number(Math.round(value.price_usd * portfolio[value.id]));
+      var totalValue = Number(Math.round(value.price_usd * portfolio[value.id]));
+      var coinName = value.id;
+      barData[coinName] = totalValue;
+      portfolioTotal += totalValue;
     }
   });
-  console.log(table.toString());
+  barGraph(barData, portfolioTotal);
+  console.log('\n'+table.toString());
   console.log(chalk.underline.blue(`Portfolio Total: ${currSym}${portfolioTotal}`));
+  console.log(' ');
 });
+
+/**
+ * Figlet console log
+ */
+
+function figletLog(text) {
+  figlet(text, function(err, data) {
+    if (err) {
+      console.log('Something went wrong...');
+      console.dir(err);
+      return;
+    }
+    console.log(data)
+  });
+}
+
+/**
+ * Bar Graphs For Coins
+ */
+
+function barGraph(barData, total) {
+  each(barData, function (value, key, array) {
+    var label = `${key} ${currSym}${value}`;
+    var graph = new Barcli({
+      label: label,
+      range: [0, 100],
+    });
+    var percent = Math.round((value / total) * 100);
+    graph.update(percent);
+  });
+}
 
 /**
 * Add zero if number only has one zero

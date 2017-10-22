@@ -11,7 +11,12 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
 1. Supports the top 100 coins based on market cap
 1. Track your portfolio holdings
 
-### Crypto Table Data
+### Bar Graph
+1. Percentage breakdown of holdings
+2. Colored Horizontal Bars
+3. Portfolio value
+
+### Crypto Table
 1. Coin Rank
 1. Price
 1. Coins Owned
@@ -28,32 +33,32 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
 
 1. Git Clone the repo
 
-```
-git clone https://github.com/christ0ph3r/cryptocurrency-cli/
-```
+  ```
+  git clone https://github.com/christ0ph3r/cryptocurrency-cli/
+  ```
 
-2. Enter the repository
+1. Enter the repository
 
-```
-cd cryptocurrency-cli && npm install
-```
+  ```
+  cd cryptocurrency-cli && npm install
+  ```
 
-3. Edit portfolio.json
+1. Run
 
-```json
-{
-  "bitcoin": ".002",
-  "litecoin": "1",
-  "ethereum": ".095",
-  "dogecoin": "10000"
-}
-```
+  ```
+  crypto-cli
+  ```
 
-4. Run
+1. Edit portfolio.json
 
-```
-crypto-cli
-```
+  ```json
+  {
+    "bitcoin": ".002",
+    "litecoin": "1",
+    "ethereum": ".095",
+    "dogecoin": "10000"
+  }
+  ```
 
 ## Like my work? Donate some coin!
 
