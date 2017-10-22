@@ -33,32 +33,32 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
 
 1. Git Clone the repo
 
-  ```
-  git clone https://github.com/christ0ph3r/cryptocurrency-cli/
-  ```
+    ```
+    git clone https://github.com/christ0ph3r/cryptocurrency-cli/
+    ```
 
 1. Enter the repository
 
-  ```
-  cd cryptocurrency-cli && npm install
-  ```
+    ```
+    cd cryptocurrency-cli && npm install
+    ```
 
 1. Run
 
-  ```
-  crypto-cli
-  ```
+    ```
+    crypto-cli
+    ```
 
 1. Edit portfolio.json
 
-  ```json
-  {
-    "bitcoin": ".002",
-    "litecoin": "1",
-    "ethereum": ".095",
-    "dogecoin": "10000"
-  }
-  ```
+    ```json
+    {
+      "bitcoin": ".002",
+      "litecoin": "1",
+      "ethereum": ".095",
+      "dogecoin": "10000"
+    }
+    ```
 
 ## Like my work? Donate some coin!
 
