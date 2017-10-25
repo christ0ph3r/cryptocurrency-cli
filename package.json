@@ -1,6 +1,6 @@
 {
   "name": "cryptocurrency-cli",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/christ0ph3r/cryptocurrency-cli"
-  }
+  },
+  "keywords": [
+    "cryptocurrency",
+    "bitcoin",
+    "litecoin",
+    "cli",
+    "terminal",
+    "commandline",
+    "coinmarketcap",
+    "api",
+    "ethereum",
+    "portfolio"
+  ]
 }
