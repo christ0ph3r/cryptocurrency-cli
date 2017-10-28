@@ -1,6 +1,5 @@
 #! /usr/bin/env node
 
-const each = require('foreach');
 const request = require('request');
 const chalk = require('chalk');
 const Table = require('cli-table');
@@ -30,7 +29,7 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
   ] });
   var portfolioTotal = 0;
   var barData = {};
-  each(data, function (value, key, array) {
+  data.forEach(function (value, key) {
     if(portfolio.hasOwnProperty(value.id)) {
       table.push([
         chalk.blue(value.rank),
@@ -77,13 +76,13 @@ function figletLog(text) {
  */
 
 function barGraph(barData, total) {
-  each(barData, function (value, key, array) {
-    var label = `${key} ${currSym}${value}`;
+  Object.keys(barData).forEach(function(key) {
+    var label = `${key} ${currSym}${barData[key]}`;
     var graph = new Barcli({
       label: label,
       range: [0, 100],
     });
-    var percent = Math.round((value / total) * 100);
+    var percent = Math.round((barData[key] / total) * 100);
     graph.update(percent);
   });
 }
