@@ -2,7 +2,7 @@
 
 Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track your earnings through the command line.  It uses the coinmarketcap.com API to fetch crypto data.
 
-![Cryptocurrency CLI](https://i.imgur.com/4ROfoEM.png)
+![Cryptocurrency CLI](https://i.imgur.com/t51gp74.png)
 
 ## Features
 
