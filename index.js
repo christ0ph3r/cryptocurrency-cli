@@ -3,11 +3,10 @@
 const request = require('request');
 const chalk = require('chalk');
 const Table = require('cli-table');
-const jsonfile = require('jsonfile');
 const figlet = require('figlet');
 const Barcli = require("barcli");
-const file = 'portfolio.json';
-const portfolio = jsonfile.readFileSync(file);
+const path = require('path');
+const portfolio = require(path.resolve(__dirname,'portfolio.json'));
 const currSym = '$';
 
 figletLog('Crypto Portfolio Loading...');

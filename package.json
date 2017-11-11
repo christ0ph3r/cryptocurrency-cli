@@ -1,6 +1,6 @@
 {
   "name": "cryptocurrency-cli",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,6 @@
     "chalk": "^2.2.0",
     "cli-table": "^0.3.1",
     "figlet": "^1.2.0",
-    "jsonfile": "^4.0.0",
     "request": "^2.83.0"
   },
   "bin": {
