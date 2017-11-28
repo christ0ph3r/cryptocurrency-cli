@@ -9,7 +9,7 @@ const path = require('path');
 const portfolio = require(path.resolve(__dirname,'portfolio.json'));
 const currSym = '€';
 
-figletLog('Portfolio');
+figletLog('Crypto Portfolio Loading...');
 
 request('https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=100', function (error, response, body) {
   var data = JSON.parse(body);
