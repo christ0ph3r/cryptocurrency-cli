@@ -7,16 +7,16 @@ const figlet = require('figlet');
 const Barcli = require("barcli");
 const path = require('path');
 const portfolio = require(path.resolve(__dirname,'portfolio.json'));
-const currSym = '$';
+const currSym = '€';
 
 figletLog('Crypto Portfolio Loading...');
 
-request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, response, body) {
+request('https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=100', function (error, response, body) {
   var data = JSON.parse(body);
   var table = new Table({ head: [
     chalk.blue('Rank'),
     chalk.blue('Coin'),
-    chalk.blue('USD Price'),
+    chalk.blue('EUR Price'),
     chalk.blue('Coins Owned'),
     chalk.blue('Net Worth'),
     chalk.blue('24 Hour Volume'),
@@ -33,17 +33,17 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
       table.push([
         chalk.blue(value.rank),
         chalk.green(value.id),
-        chalk.green(currSym + addCommas(value.price_usd)),
+        chalk.green(currSym + addCommas(value.price_eur)),
         chalk.green(addCommas(portfolio[value.id])),
-        chalk.green(currSym + addCommas(Number(Math.round(value.price_usd * portfolio[value.id])))),
-        chalk.green(currSym + addCommas(addZeroes(value['24h_volume_usd']))),
-        chalk.green(currSym + addCommas(addZeroes(value.market_cap_usd))),
+        chalk.green(currSym + addCommas(Number(Math.round(value.price_eur * portfolio[value.id])))),
+        chalk.green(currSym + addCommas(addZeroes(value['24h_volume_eur']))),
+        chalk.green(currSym + addCommas(addZeroes(value.market_cap_eur))),
         chalk.green(`${value.percent_change_1h}%`),
         chalk.green(`${value.percent_change_24h}%`),
         chalk.green(`${value.percent_change_7d}%`),
         chalk.green(timeSince(new Date(value.last_updated * 1000)) + ' ago'),
       ]);
-      var totalValue = Number(Math.round(value.price_usd * portfolio[value.id]));
+      var totalValue = Number(Math.round(value.price_eur * portfolio[value.id]));
       var coinName = value.id;
       barData[coinName] = totalValue;
       portfolioTotal += totalValue;
@@ -155,4 +155,3 @@ function timeSince(date) {
   }
   return Math.floor(seconds) + " seconds";
 }
-
