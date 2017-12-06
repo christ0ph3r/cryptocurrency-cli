@@ -15,7 +15,7 @@ const portfolio = require(path.resolve(__dirname,'portfolio.json'));
  */
 
 program
-  .version('1.4.0')
+  .version('1.4.1')
   .option('-c, --currency [value]', 'An optional currency value', 'USD')
   .parse(process.argv);
 
@@ -56,7 +56,6 @@ request(requestUrl, function (error, response, body) {
   var barData = {};
   data.forEach(function (value, key) {
     if(portfolio.hasOwnProperty(value.id)) {
-      console.log(value['price_'+curLow]);
       table.push([
         chalk.blue(value.rank),
         chalk.green(value.id),
