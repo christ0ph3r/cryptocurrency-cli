@@ -15,7 +15,7 @@ const portfolio = require(path.resolve(__dirname,'portfolio.json'));
  */
 
 program
-  .version('1.4.1')
+  .version('1.4.2')
   .option('-c, --currency [value]', 'An optional currency value', 'USD')
   .parse(process.argv);
 
@@ -61,7 +61,7 @@ request(requestUrl, function (error, response, body) {
         chalk.green(value.id),
         chalk.green(curSym+addCommas(value['price_'+curLow])),
         chalk.green(addCommas(portfolio[value.id])),
-        chalk.green(addCommas(Number(Math.round(value.price_usd * portfolio[value.id])))),
+        chalk.green(curSym+addCommas(Number(Math.round(value['price_'+curLow] * portfolio[value.id])))),
         chalk.green(curSym+addCommas(addZeroes(value['24h_volume_'+curLow]))),
         chalk.green(curSym+addCommas(addZeroes(value['market_cap_'+curLow]))),
         chalk.green(`${value.percent_change_1h}%`),
