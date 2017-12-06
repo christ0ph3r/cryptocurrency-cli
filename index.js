@@ -6,17 +6,43 @@ const Table = require('cli-table');
 const figlet = require('figlet');
 const Barcli = require("barcli");
 const path = require('path');
+const program = require('commander');
+const getSymbolFromCurrency = require('currency-symbol-map');
 const portfolio = require(path.resolve(__dirname,'portfolio.json'));
-const currSym = '$';
+
+/**
+ * Command Line Options
+ */
+
+program
+  .version('1.4.0')
+  .option('-c, --currency [value]', 'An optional currency value', 'USD')
+  .parse(process.argv);
+
+/**
+ * Set currency
+ */
+var curUp = program.currency.toUpperCase();
+var curLow = program.currency.toLowerCase();
+var curSym = getSymbolFromCurrency(curUp);
+
+/**
+ * Loading Message Figlet Style
+ */
 
 figletLog('Crypto Portfolio Loading...');
 
-request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, response, body) {
+/**
+ * Request and table
+ */
+const requestUrl = 'https://api.coinmarketcap.com/v1/ticker/?convert=' + curUp + '&limit=100';
+
+request(requestUrl, function (error, response, body) {
   var data = JSON.parse(body);
   var table = new Table({ head: [
     chalk.blue('Rank'),
     chalk.blue('Coin'),
-    chalk.blue('USD Price'),
+    chalk.blue(`${curUp} Price`),
     chalk.blue('Coins Owned'),
     chalk.blue('Net Worth'),
     chalk.blue('24 Hour Volume'),
@@ -30,20 +56,21 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
   var barData = {};
   data.forEach(function (value, key) {
     if(portfolio.hasOwnProperty(value.id)) {
+      console.log(value['price_'+curLow]);
       table.push([
         chalk.blue(value.rank),
         chalk.green(value.id),
-        chalk.green(currSym + addCommas(value.price_usd)),
+        chalk.green(curSym+addCommas(value['price_'+curLow])),
         chalk.green(addCommas(portfolio[value.id])),
-        chalk.green(currSym + addCommas(Number(Math.round(value.price_usd * portfolio[value.id])))),
-        chalk.green(currSym + addCommas(addZeroes(value['24h_volume_usd']))),
-        chalk.green(currSym + addCommas(addZeroes(value.market_cap_usd))),
+        chalk.green(addCommas(Number(Math.round(value.price_usd * portfolio[value.id])))),
+        chalk.green(curSym+addCommas(addZeroes(value['24h_volume_'+curLow]))),
+        chalk.green(curSym+addCommas(addZeroes(value['market_cap_'+curLow]))),
         chalk.green(`${value.percent_change_1h}%`),
         chalk.green(`${value.percent_change_24h}%`),
         chalk.green(`${value.percent_change_7d}%`),
         chalk.green(timeSince(new Date(value.last_updated * 1000)) + ' ago'),
       ]);
-      var totalValue = Number(Math.round(value.price_usd * portfolio[value.id]));
+      var totalValue = Number(Math.round(value['price_'+curLow] * portfolio[value.id]));
       var coinName = value.id;
       barData[coinName] = totalValue;
       portfolioTotal += totalValue;
@@ -51,7 +78,7 @@ request('https://api.coinmarketcap.com/v1/ticker/?limit=100', function (error, r
   });
   barGraph(barData, portfolioTotal);
   console.log('\n'+table.toString());
-  console.log(chalk.underline.blue(`Portfolio Total: ${currSym}${portfolioTotal}`));
+  console.log(chalk.underline.blue(`Portfolio Total: ${curSym}${portfolioTotal}`));
   console.log(' ');
 });
 
@@ -76,7 +103,7 @@ function figletLog(text) {
 
 function barGraph(barData, total) {
   Object.keys(barData).forEach(function(key) {
-    var label = `${key} ${currSym}${barData[key]}`;
+    var label = `${key} ${curSym}${barData[key]}`;
     var graph = new Barcli({
       label: label,
       range: [0, 100],

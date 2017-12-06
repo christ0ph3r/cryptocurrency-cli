@@ -10,6 +10,7 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
 1. Command Line Interface
 1. Supports the top 100 coins based on market cap
 1. Track your portfolio holdings
+1. Currency Support
 
 ### Bar Graph
 1. Percentage breakdown of holdings
@@ -59,6 +60,15 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
       "dogecoin": "10000"
     }
     ```
+
+## Command Line Options
+
+Currency: You can use `-c` or `--currency` to look up crypto data in another currency.  The default currency is USD and the API supports AUD, BRL, CAD, CHF, CLP, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, ILS, INR, JPY, KRW, MXN, MYR, NOK, NZD, PHP, PKR, PLN, RUB, SEK, SGD, THB, TRY, TWD, ZAR.
+
+  ```
+  npm start -- -c eur
+  npm start -- -c aud
+  ```
 
 ## Like my work? Donate some coin!
 
