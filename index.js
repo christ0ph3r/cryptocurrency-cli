@@ -15,7 +15,7 @@ const portfolio = require(path.resolve(__dirname,'portfolio.json'));
  */
 
 program
-  .version('1.4.2')
+  .version('1.4.3')
   .option('-c, --currency [value]', 'An optional currency value', 'USD')
   .parse(process.argv);
 
@@ -35,7 +35,7 @@ figletLog('Crypto Portfolio Loading...');
 /**
  * Request and table
  */
-const requestUrl = 'https://api.coinmarketcap.com/v1/ticker/?convert=' + curUp + '&limit=100';
+const requestUrl = 'https://api.coinmarketcap.com/v1/ticker/?convert=' + curUp + '&limit=-1';
 
 request(requestUrl, function (error, response, body) {
   var data = JSON.parse(body);
@@ -119,7 +119,9 @@ function barGraph(barData, total) {
 * https://stackoverflow.com/a/24039448
 */
 
-function addZeroes( num ) {
+function addZeroes(num) {
+  if (!num)
+    return '?';
   var value = Number(num);
   var res = num.split(".");
   if(num.indexOf('.') === -1) {
