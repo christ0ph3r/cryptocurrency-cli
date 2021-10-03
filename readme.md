@@ -29,6 +29,11 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
 1. % Change 1 Week
 1. Last Updated
 
+## CoinMarketCap API
+Create a API key before, instructions here :
+https://coinmarketcap.com/api/documentation/v1/#section/Introduction
+
+
 ## Installation Instructions
 
 
@@ -43,6 +48,10 @@ Cryptocurrency CLI lets you monitor cryptocurrencies in your portfolio and track
     ```
     cd cryptocurrency-cli && npm install
     ```
+
+1. Configuration
+
+    Put your API KEY in .env file
 
 1. Run
 

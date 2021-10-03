@@ -15,6 +15,7 @@
     "cli-table": "^0.3.1",
     "commander": "^2.12.2",
     "currency-symbol-map": "^4.0.3",
+    "dotenv": "^10.0.0",
     "figlet": "^1.2.0",
     "request": "^2.83.0"
   },
