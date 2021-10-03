@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+require('dotenv').config();
 
 const request = require('request');
 const chalk = require('chalk');
@@ -35,10 +36,11 @@ figletLog('Crypto Portfolio Loading...');
 /**
  * Request and table
  */
-const requestUrl = 'https://api.coinmarketcap.com/v1/ticker/?convert=' + curUp + '&limit=-1';
+const requestUrl = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?sort=market_cap&start=1&limit=5000&convert=' + curUp + '&CMC_PRO_API_KEY='+process.env.CMC_PRO_API_KEY;
 
 request(requestUrl, function (error, response, body) {
-  var data = JSON.parse(body);
+  var response = JSON.parse(body);
+  var data = response.data;
   var table = new Table({ head: [
     chalk.blue('Rank'),
     chalk.blue('Coin'),
@@ -55,22 +57,22 @@ request(requestUrl, function (error, response, body) {
   var portfolioTotal = 0;
   var barData = {};
   data.forEach(function (value, key) {
-    if(portfolio.hasOwnProperty(value.id)) {
+    if(portfolio.hasOwnProperty(value.slug)) {
       table.push([
-        chalk.blue(value.rank),
-        chalk.green(value.id),
-        chalk.green(curSym+addCommas(value['price_'+curLow])),
-        chalk.green(addCommas(portfolio[value.id])),
-        chalk.green(curSym+addCommas(Number(Math.round(value['price_'+curLow] * portfolio[value.id])))),
-        chalk.green(curSym+addCommas(addZeroes(value['24h_volume_'+curLow]))),
-        chalk.green(curSym+addCommas(addZeroes(value['market_cap_'+curLow]))),
-        chalk.green(`${value.percent_change_1h}%`),
-        chalk.green(`${value.percent_change_24h}%`),
-        chalk.green(`${value.percent_change_7d}%`),
-        chalk.green(timeSince(new Date(value.last_updated * 1000)) + ' ago'),
+        chalk.blue(value.cmc_rank),
+        chalk.green(value.name),
+        chalk.green(curSym+addCommas(value.quote[curUp].price.toFixed(8))),
+        chalk.green(addCommas(portfolio[value.slug])),
+        chalk.green(curSym+addCommas(Number(Math.round(value.quote[curUp].price * portfolio[value.slug])))),
+        chalk.green(curSym+addCommas(value.quote[curUp].volume_24h)),
+        chalk.green(curSym+addCommas(value.quote[curUp].market_cap)),
+        chalk.green(`${value.quote[curUp].percent_change_1h}%`),
+        chalk.green(`${value.quote[curUp].percent_change_24h}%`),
+        chalk.green(`${value.quote[curUp].percent_change_7d}%`),
+        chalk.green(value.quote[curUp].last_updated),
       ]);
-      var totalValue = Number(Math.round(value['price_'+curLow] * portfolio[value.id]));
-      var coinName = value.id;
+      var totalValue = Number(Math.round(value.quote[curUp].price * portfolio[value.slug]));
+      var coinName = value.name;
       barData[coinName] = totalValue;
       portfolioTotal += totalValue;
     }
@@ -113,28 +115,6 @@ function barGraph(barData, total) {
 }
 
 /**
-* Add zero if number only has one zero
-* Example: $666,888.0 >> $666,888.00
-* Fixes coinmarketcap API issues for market caps
-* https://stackoverflow.com/a/24039448
-*/
-
-function addZeroes(num) {
-  if (!num)
-    return '?';
-  var value = Number(num);
-  var res = num.split(".");
-  if(num.indexOf('.') === -1) {
-    value = value.toFixed(2);
-    num = value.toString();
-  } else if (res[1].length < 3) {
-    value = value.toFixed(2);
-    num = value.toString();
-  }
-  return num
-}
-
-/**
 * Comma seperate big numbers
 * Took multiple answers
 * from https://stackoverflow.com/questions/1990512/add-comma-to-numbers-every-three-digits/
@@ -152,35 +132,4 @@ function addCommas(nStr){
   }
   return x1 + x2;
 };
-
-
-/**
-* Pretty time format X ago function
-* https://stackoverflow.com/a/3177838
-*/
-
-function timeSince(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
-  var interval = Math.floor(seconds / 31536000);
-  if (interval > 1) {
-    return interval + " years";
-  }
-  interval = Math.floor(seconds / 2592000);
-  if (interval > 1) {
-    return interval + " months";
-  }
-  interval = Math.floor(seconds / 86400);
-  if (interval > 1) {
-    return interval + " days";
-  }
-  interval = Math.floor(seconds / 3600);
-  if (interval > 1) {
-    return interval + " hours";
-  }
-  interval = Math.floor(seconds / 60);
-  if (interval > 1) {
-    return interval + " minutes";
-  }
-  return Math.floor(seconds) + " seconds";
-}
 
